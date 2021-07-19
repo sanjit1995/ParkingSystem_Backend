@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  postgres_db:
+    image: postgres
+    restart: always
+    container_name: parking_database
+    environment:
+#      POSTGRES_USER: parking
+      POSTGRES_PASSWORD: parking123
+      POSTGRES_DB: parking_db
+    ports:
+      - "6565:5432"
+    volumes:
+    - ./db_setup:/docker-entrypoint-initdb.d
+
+  main_api:
+    build: ./app
+    container_name: parking_app
+    restart: always
+    depends_on:
+      - postgres_db
+    ports:
+      - "8000:7000"
+    volumes:
+      - ./app/:/app
