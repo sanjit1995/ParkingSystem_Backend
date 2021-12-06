@@ -15,6 +15,9 @@ class Users(Base):
     contact_number = Column(DECIMAL)
     gender = Column(CHAR)
 
+    def get_json(self):
+        return {'user_id': self.user_id, 'email': self.email, 'dob': self.dob}
+
 class Login(Base):
     __tablename__ = "login"
 
